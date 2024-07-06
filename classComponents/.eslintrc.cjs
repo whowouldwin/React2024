@@ -14,11 +14,14 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['react-refresh'],
+  plugins: ['@typescript-eslint','react-refresh', 'react-hooks', 'react-compiler'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
+    "@typescript-eslint/no-explicit-any": "error",
+    // "react-compiler/some-react-specific-rule": "error"
+    "react-compiler/react-compiler": "error"
   },
 }
