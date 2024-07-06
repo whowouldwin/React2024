@@ -1,14 +1,14 @@
-import { Component } from 'react';
-import { Result, ApiResponse, Person } from './interfaces';
+import {Component} from 'react';
+import {Result, ApiResponse, Person} from './interfaces';
 import './App.css';
 import Header from './components/Header/Header';
 import Results from './components/Results/Results';
 
-
-
 interface State {
   results: Result[];
+  loading: boolean;
   error: boolean;
+  showResults: boolean;
 }
 
 class App extends Component<object, State> {
@@ -16,7 +16,9 @@ class App extends Component<object, State> {
     super(props);
     this.state = {
       results: [],
+      loading: false,
       error: false,
+      showResults: false,
     };
   }
 
@@ -25,21 +27,22 @@ class App extends Component<object, State> {
   }
 
   fetchResults = async (query: string): Promise<void> => {
+    this.setState({ loading: true, error: false, showResults: false });
     try {
       const response = await fetch(
-        `https://swapi.dev/api/people/?search=${query.trim()}`,
+        `https://swapi.dev/api/people/?search=${query.trim()}`
       );
       const data: ApiResponse = await response.json();
       const results = data.results.map((item: Person) => ({
         name: item.name,
         height: item.height,
-        description: "Person"
+        description: 'Person',
       }));
       console.log(results);
-      this.setState({ results });
+      this.setState({ results, loading: false, showResults: true });
     } catch (error) {
       console.error('Error fetching data:', error);
-      this.setState({ error: true });
+      this.setState({ error: true, loading: false });
     }
   };
 
@@ -57,12 +60,19 @@ class App extends Component<object, State> {
     }
     return (
       <div className="app">
-        <h1 className="app-header">Star Wars Search</h1>
-        {/*<Header onSearch={this.handleSearch} handleThrowError={this.handleThrowError} />*/}
-        <Header onSearch={this.handleSearch} />
-        <Results results={this.state.results} />
+        <div className="header-container">
+          <h1 className="app-header">Star Wars Search</h1>
+          {/*<Header onSearch={this.handleSearch} handleThrowError={this.handleThrowError} />*/}
+          <Header onSearch={this.handleSearch} />
+        </div>
+        <div className="content">
+          {this.state.loading ? (
+            <div className="loader"></div>
+          ) : (
+            <Results results={this.state.results} />
+          )}
+        </div>
       </div>
-
     );
   }
 }
