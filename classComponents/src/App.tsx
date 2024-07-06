@@ -1,14 +1,18 @@
 import { Component } from 'react';
-import { Result } from './interfaces';
+import { Result, ApiResponse, Person } from './interfaces';
 import './App.css';
+import Header from './components/Header/Header';
+import Results from './components/Results/Results';
+
+
 
 interface State {
   results: Result[];
   error: boolean;
 }
 
-class App extends Component<{}, State> {
-  constructor(props: {}) {
+class App extends Component<object, State> {
+  constructor(props: object) {
     super(props);
     this.state = {
       results: [],
@@ -16,19 +20,20 @@ class App extends Component<{}, State> {
     };
   }
 
-  componentDidMount() {
-    this.fetchResults('');
+  async componentDidMount() {
+    await this.fetchResults('');
   }
 
-  fetchResults = async (query: string) => {
+  fetchResults = async (query: string): Promise<void> => {
     try {
       const response = await fetch(
         `https://swapi.dev/api/people/?search=${query.trim()}`,
       );
-      const data = await response.json();
-      const results = data.results.map((item: any) => ({
+      const data: ApiResponse = await response.json();
+      const results = data.results.map((item: Person) => ({
         name: item.name,
         height: item.height,
+        description: "Person"
       }));
       console.log(results);
       this.setState({ results });
@@ -38,13 +43,13 @@ class App extends Component<{}, State> {
     }
   };
 
-  handleSearch = (query: string) => {
-    this.fetchResults(query);
+  handleSearch = async (query: string) => {
+    await this.fetchResults(query);
   };
 
-  handleThrowError = () => {
-    this.setState({ error: true });
-  };
+  // handleThrowError = () => {
+  //   this.setState({ error: true });
+  // };
 
   render() {
     if (this.state.error) {
@@ -53,7 +58,11 @@ class App extends Component<{}, State> {
     return (
       <div className="app">
         <h1 className="app-header">Star Wars Search</h1>
+        {/*<Header onSearch={this.handleSearch} handleThrowError={this.handleThrowError} />*/}
+        <Header onSearch={this.handleSearch} />
+        <Results results={this.state.results} />
       </div>
+
     );
   }
 }
