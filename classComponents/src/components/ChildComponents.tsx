@@ -33,9 +33,6 @@ class ChildComponents extends Component<object, State> {
       const response = await fetch(
         `https://swapi.dev/api/people/?search=${query.trim()}`,
       );
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
       const data: ApiResponse = await response.json();
       const results = data.results.map((item: Person) => ({
         name: item.name,
