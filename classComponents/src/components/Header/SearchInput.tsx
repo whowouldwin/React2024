@@ -11,8 +11,9 @@ interface SearchInputState {
 class SearchInput extends Component<SearchInputProps, SearchInputState> {
   constructor(props: SearchInputProps) {
     super(props);
+    const savedQuery = localStorage.getItem('searchQuery') || '';
     this.state = {
-      query: '',
+      query: savedQuery,
     };
   }
 
@@ -21,7 +22,9 @@ class SearchInput extends Component<SearchInputProps, SearchInputState> {
   };
 
   handleSearch = () => {
-    this.props.onSearch(this.state.query);
+    const { query } = this.state;
+    localStorage.setItem('searchQuery', query);
+    this.props.onSearch(query);
   };
 
   render() {
