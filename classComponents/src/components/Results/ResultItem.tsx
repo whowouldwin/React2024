@@ -1,5 +1,5 @@
-import {Component} from 'react';
-import {Result} from '../../interfaces';
+import { Component } from 'react';
+import { Result } from '../../interfaces';
 
 interface ResultItemProps {
   result: Result;

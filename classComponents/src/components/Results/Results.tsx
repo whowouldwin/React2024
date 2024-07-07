@@ -9,7 +9,7 @@ interface ResultsProps {
 class Results extends Component<ResultsProps> {
   render() {
     return (
-      <div className='results'>
+      <div className="results">
         {this.props.results.map((result) => (
           <ResultItem key={result.name} result={result} />
         ))}

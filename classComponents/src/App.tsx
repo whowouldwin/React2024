@@ -1,8 +1,8 @@
-import {Component} from 'react';
-import {Result} from './interfaces';
+import { Component } from 'react';
+import { Result } from './interfaces';
 import './App.css';
 import ErrorBoundary from './components/ErrorBoundary';
-import ChildComponents from "./components/ChildComponents";
+import ChildComponents from './components/ChildComponents';
 
 interface State {
   results: Result[];
@@ -12,7 +12,6 @@ interface State {
 }
 
 class App extends Component<object, State> {
-
   render() {
     return (
       <div className="app">
