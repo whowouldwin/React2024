@@ -1,19 +1,19 @@
-import React, {useEffect} from 'react';
-import {Result} from '../../interfaces';
+import React, { useEffect } from 'react';
+import { Result } from '../../interfaces';
 
 interface ResultItemProps {
   result: Result;
 }
 
-const ResultItem = ({result}: ResultItemProps) => {
+const ResultItem = ({ result }: ResultItemProps) => {
   const [show, setShow] = React.useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShow(true)
+      setShow(true);
     }, 100);
-    return () => clearTimeout(timer)
-  })
+    return () => clearTimeout(timer);
+  });
 
   return (
     <div className={`result-item ${show ? 'show' : ''}`}>
@@ -22,7 +22,6 @@ const ResultItem = ({result}: ResultItemProps) => {
       <p>{result.description}</p>
     </div>
   );
-
-}
+};
 
 export default ResultItem;

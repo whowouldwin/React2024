@@ -1,5 +1,5 @@
-import {ApiResponse, Person, Result} from "../interfaces";
-import {useState, useCallback, useEffect} from "react";
+import { ApiResponse, Person, Result } from '../interfaces';
+import { useState, useCallback, useEffect } from 'react';
 
 export const useFetchResults = () => {
   const [results, setResults] = useState<Result[]>([]);
@@ -28,7 +28,7 @@ export const useFetchResults = () => {
 
   useEffect(() => {
     const savedQuery = localStorage.getItem('searchQuery') || '';
-    fetchResults(savedQuery).then(r => {
+    fetchResults(savedQuery).then((r) => {
       console.log(r);
     });
   }, [fetchResults]);
