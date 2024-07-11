@@ -4,7 +4,7 @@ interface SearchInputProps {
   onSearch: (query: string) => void;
 }
 
-const SearchInput = ({onSearch}: SearchInputProps) => {
+const SearchInput = ({ onSearch }: SearchInputProps) => {
 
   const savedQuery = localStorage.getItem('searchQuery') || '';
   const [query, setQuery] = useState(savedQuery);
