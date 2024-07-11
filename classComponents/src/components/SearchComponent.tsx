@@ -3,6 +3,7 @@ import { Result, ApiResponse, Person } from '../interfaces';
 import '../App.css';
 import Header from './Header/Header';
 import Results from './Results/Results';
+import {useErrorHandling} from "../hooks/useErrorHandling";
 
 interface State {
   results: Result[];
@@ -11,7 +12,7 @@ interface State {
   showResults: boolean;
 }
 
-class ChildComponents extends Component<object, State> {
+class SearchComponent extends Component<object, State> {
   constructor(props: object) {
     super(props);
     this.state = {
@@ -51,10 +52,6 @@ class ChildComponents extends Component<object, State> {
     await this.fetchResults(query);
   };
 
-  handleThrowError = () => {
-    this.setState({ error: true });
-  };
-
   render() {
     if (this.state.error) {
       throw new Error('Error fetching data');
@@ -65,7 +62,7 @@ class ChildComponents extends Component<object, State> {
           <h1 className="app-header">Star Wars Search</h1>
           {/*<Header onSearch={this.handleSearch} handleThrowError={this.handleThrowError} />*/}
           <Header onSearch={this.handleSearch} />
-          <button onClick={this.handleThrowError}>Throw Error</button>
+          <button onClick={useErrorHandling}>Throw Error</button>
         </div>
         <div className="content">
           {this.state.loading ? (
@@ -79,4 +76,4 @@ class ChildComponents extends Component<object, State> {
   }
 }
 
-export default ChildComponents;
+export default SearchComponent;

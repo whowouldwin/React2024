@@ -2,13 +2,13 @@
 
 import './App.css';
 import ErrorBoundary from './components/ErrorBoundary';
-import ChildComponents from './components/ChildComponents';
+import SearchComponent from './components/SearchComponent';
 
 const App = () => {
     return (
       <div className="app">
         <ErrorBoundary>
-          <ChildComponents />
+          <SearchComponent />
         </ErrorBoundary>
       </div>
     );
