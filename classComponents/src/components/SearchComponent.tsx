@@ -1,79 +1,53 @@
-import { Component } from 'react';
-import { Result, ApiResponse, Person } from '../interfaces';
+import {useEffect} from 'react';
 import '../App.css';
 import Header from './Header/Header';
 import Results from './Results/Results';
 import {useErrorHandling} from "../hooks/useErrorHandling";
+import {useFetchResults} from "../hooks/useFetchResults";
 
-interface State {
-  results: Result[];
-  loading: boolean;
-  error: boolean;
-  showResults: boolean;
-}
 
-class SearchComponent extends Component<object, State> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      results: [],
-      loading: false,
-      error: false,
-      showResults: false,
-    };
-  }
+const SearchComponent = () => {
+ const {results, loading, fetchResults} = useFetchResults();
+ const {error, handleThrowError} = useErrorHandling();
 
-  async componentDidMount() {
-    const savedQuery = localStorage.getItem('searchQuery') || '';
-    await this.fetchResults(savedQuery);
-  }
 
-  fetchResults = async (query: string): Promise<void> => {
-    this.setState({ loading: true, error: false, showResults: false });
+  const handleSearch = async (query: string) => {
     try {
-      const response = await fetch(
-        `https://swapi.dev/api/people/?search=${query.trim()}`,
-      );
-      const data: ApiResponse = await response.json();
-      const results = data.results.map((item: Person) => ({
-        name: item.name,
-        height: item.height,
-        description: 'Person',
-      }));
-      console.log(results);
-      this.setState({ results, loading: false, showResults: true });
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      this.setState({ error: true, loading: false });
+      await fetchResults(query);
+    } catch (err) {
+      console.error('Error during search:', err);
     }
   };
 
-  handleSearch = async (query: string) => {
-    await this.fetchResults(query);
-  };
+  useEffect(() => {
+    const savedQuery = localStorage.getItem('searchQuery') || '';
+    fetchResults(savedQuery).then(r => {
+      console.log(r);
+    } );
+  }, [fetchResults]);
 
-  render() {
-    if (this.state.error) {
-      throw new Error('Error fetching data');
-    }
+  if (error) {
+    throw error;
+  }
+
     return (
       <>
         <div className="header-container">
           <h1 className="app-header">Star Wars Search</h1>
           {/*<Header onSearch={this.handleSearch} handleThrowError={this.handleThrowError} />*/}
-          <Header onSearch={this.handleSearch} />
-          <button onClick={useErrorHandling}>Throw Error</button>
+          <Header onSearch={handleSearch} />
+          <button onClick={handleThrowError}>Throw Error</button>
         </div>
         <div className="content">
-          {this.state.loading ? (
+          {loading ? (
             <div className="loader"></div>
           ) : (
-            <Results results={this.state.results} />
+            <Results results={results} />
           )}
         </div>
       </>
     );
-  }
-}
+
+};
 
 export default SearchComponent;

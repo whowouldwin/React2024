@@ -8,4 +8,3 @@ export const useErrorHandling = () => {
   return { error, handleThrowError };
 }
 
-
