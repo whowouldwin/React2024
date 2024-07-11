@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { Result } from '../../interfaces';
 import ResultItem from './ResultItem';
 
@@ -6,16 +5,13 @@ interface ResultsProps {
   results: Result[];
 }
 
-class Results extends Component<ResultsProps> {
-  render() {
+const Results = ({ results }: ResultsProps) => {
     return (
       <div className="results">
-        {this.props.results.map((result) => (
+        {results.map((result) => (
           <ResultItem key={result.name} result={result} />
         ))}
       </div>
     );
-  }
 }
-
 export default Results;
