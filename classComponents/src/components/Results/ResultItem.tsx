@@ -3,9 +3,10 @@ import { Result } from '../../interfaces';
 
 interface ResultItemProps {
   result: Result;
+  onClick: () => void;
 }
 
-const ResultItem = ({ result }: ResultItemProps) => {
+const ResultItem = ({ result, onClick }: ResultItemProps) => {
   const [show, setShow] = React.useState(false);
 
   useEffect(() => {
@@ -13,10 +14,10 @@ const ResultItem = ({ result }: ResultItemProps) => {
       setShow(true);
     }, 100);
     return () => clearTimeout(timer);
-  });
+  }, []);
 
   return (
-    <div className={`result-item ${show ? 'show' : ''}`}>
+    <div className={`result-item ${show ? 'show' : ''}`} onClick={onClick}>
       <h2>{result.name}</h2>
       <p>Height: {result.height}</p>
       <p>{result.description}</p>

@@ -68,3 +68,19 @@
   margin: 2rem auto;
 }
 
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-section {
+  width: 60%;
+  padding: 10px;
+}
+
+.right-section {
+  width: 40%;
+  padding: 10px;
+  border-left: 1px solid #ccc;
+}
