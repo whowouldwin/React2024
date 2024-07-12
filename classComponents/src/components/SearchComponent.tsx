@@ -22,7 +22,7 @@ const SearchComponent = () => {
 
   const handleSearch = async (query: string) => {
     try {
-      await fetchResults(query);
+      await fetchResults(query, 1);
       navigate(`/?frontpage=1`);
     } catch (err) {
       console.error('Error during search:', err);
@@ -43,10 +43,10 @@ const SearchComponent = () => {
 
   useEffect(() => {
     const savedQuery = localStorage.getItem('searchQuery') || '';
-    fetchResults(savedQuery).then((r) => {
+    fetchResults(savedQuery, currentPage).then((r) => {
       console.log(r);
     });
-  }, [fetchResults]);
+  }, [fetchResults, currentPage]);
 
   if (error) {
     throw error;

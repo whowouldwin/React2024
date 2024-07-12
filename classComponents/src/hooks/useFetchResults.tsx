@@ -5,11 +5,11 @@ export const useFetchResults = () => {
   const [results, setResults] = useState<Result[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchResults = useCallback(async (query: string): Promise<void> => {
+  const fetchResults = useCallback(async (query: string, page: number = 1): Promise<void> => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://swapi.dev/api/people/?search=${query.trim()}`,
+        `https://swapi.dev/api/people/?search=${query.trim()}&page=${page}`,
       );
       const data: ApiResponse = await response.json();
       const fetchedResults = data.results.map((item: Person) => ({
@@ -19,9 +19,9 @@ export const useFetchResults = () => {
       }));
       console.log(fetchedResults);
       setResults(fetchedResults);
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
       setLoading(false);
     }
   }, []);
