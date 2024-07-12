@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from 'react';
 export const useFetchResults = () => {
   const [results, setResults] = useState<Result[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [totalResults, setTotalResults] = useState<number>(0);
 
   const fetchResults = useCallback(async (query: string, page: number = 1): Promise<void> => {
     setLoading(true);
@@ -19,6 +20,7 @@ export const useFetchResults = () => {
       }));
       console.log(fetchedResults);
       setResults(fetchedResults);
+      setTotalResults(data.count)
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -33,5 +35,5 @@ export const useFetchResults = () => {
     });
   }, [fetchResults]);
 
-  return { results, loading, fetchResults };
+  return { results, loading, fetchResults, totalResults };
 };

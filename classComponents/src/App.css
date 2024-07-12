@@ -3,12 +3,12 @@
   width: 100%;
 }
 
-.header-container {
-  width: 100%;
-  background-color: white;
-  z-index: 1;
-  padding: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+body, html, .content {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
 }
 
 .loader {
@@ -18,10 +18,22 @@
 }
 
 .content {
-  padding: 0 1rem;
-  max-width: 1280px;
+  max-width: 1340px;
   min-height: 400px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.header-container {
+  padding: 20px;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.app-header {
+  margin: 0;
+  font-size: 24px;
 }
 
 .results {
@@ -72,15 +84,86 @@
 .main-container {
   display: flex;
   flex-direction: row;
+  height: 100%;
+}
+
+.left-section, .right-section {
+  overflow-y: auto;
+  padding: 20px;
 }
 
 .left-section {
-  width: 60%;
-  padding: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
 }
 
 .right-section {
-  width: 40%;
-  padding: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
   border-left: 1px solid #ccc;
+}
+input[type="text"] {
+  margin-bottom: 1rem;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #595858;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #bbc1c1;
+}
+.right-section button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #cbc5c5;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  align-self: center;
+}
+.right-section button:hover {
+  background-color: #a0a5a5;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #62625f;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:enabled {
+  background-color: #62625f;
 }

@@ -9,6 +9,7 @@ export interface Person {
 }
 
 export interface ApiResponse {
+  count: number;
   results: Person[];
 }
 

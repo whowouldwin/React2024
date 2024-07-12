@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Result } from '../../interfaces';
+import './ResultItem.css';
 
 interface ResultItemProps {
   result: Result;
@@ -19,8 +20,6 @@ const ResultItem = ({ result, onClick }: ResultItemProps) => {
   return (
     <div className={`result-item ${show ? 'show' : ''}`} onClick={onClick}>
       <h2>{result.name}</h2>
-      <p>Height: {result.height}</p>
-      <p>{result.description}</p>
     </div>
   );
 };

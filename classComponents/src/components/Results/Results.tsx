@@ -1,5 +1,6 @@
 import { Result } from '../../interfaces';
 import ResultItem from './ResultItem';
+import './Results.css';
 
 interface ResultsProps {
   results: Result[];
@@ -8,11 +9,11 @@ interface ResultsProps {
 
 const Results = ({ results, onResultClick }: ResultsProps) => {
   return (
-    <div className="results">
+    <ul className="results-list">
       {results.map((result, index) => (
         <ResultItem key={result.name} result={result} onClick={() => onResultClick(index + 1)} />
       ))}
-    </div>
+    </ul>
   );
 };
 export default Results;

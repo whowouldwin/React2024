@@ -8,8 +8,10 @@ import { useErrorHandling } from '../hooks/useErrorHandling';
 import { useFetchResults } from '../hooks/useFetchResults';
 import Pagination from './Pagination';
 
+const resultsPerPage: number = 10;
+
 const SearchComponent = () => {
-  const { results, loading, fetchResults } = useFetchResults();
+  const { results, loading, fetchResults, totalResults } = useFetchResults();
   const { error, handleThrowError } = useErrorHandling();
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,24 +56,29 @@ const SearchComponent = () => {
 
   return (
     <>
-      <div className="header-container">
-        <h1 className="app-header">Star Wars Search</h1>
-        <Header onSearch={handleSearch} />
-        <button onClick={handleThrowError}>Throw Error</button>
-      </div>
       <div className="content">
         {loading ? (
           <div className="loader"></div>
         ) : (
           <div className="main-container">
             <div className="left-section">
-              <Results results={results} onResultClick={handleResultClick} />
-              <Pagination currentPage={currentPage} onPageChange={handlePageChange} />
+              <div className="header-container">
+                <h1 className="app-header">Star Wars Search</h1>
+                <Header onSearch={handleSearch}/>
+                <button onClick={handleThrowError}>Throw Error</button>
+              </div>
+              <Results results={results} onResultClick={handleResultClick}/>
+              <Pagination
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+                totalResults={totalResults}
+                resultsPerPage={resultsPerPage}
+              />
             </div>
             {detailsId && (
               <div className="right-section">
                 <button onClick={handleCloseDetails}>Close</button>
-                <DetailComponent id={detailsId} />
+                <DetailComponent id={detailsId}/>
               </div>
             )}
           </div>
