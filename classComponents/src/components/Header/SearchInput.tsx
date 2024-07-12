@@ -1,19 +1,18 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
+import useSearchQuery from "../../hooks/useSearchQuery";
 
 interface SearchInputProps {
   onSearch: (query: string) => void;
 }
 
 const SearchInput = ({ onSearch }: SearchInputProps) => {
-  const savedQuery = localStorage.getItem('searchQuery') || '';
-  const [query, setQuery] = useState(savedQuery);
+  const { query, setQuery } = useSearchQuery();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
   const handleSearch = () => {
-    localStorage.setItem('searchQuery', query);
     onSearch(query);
   };
 
