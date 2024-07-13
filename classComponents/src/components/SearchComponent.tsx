@@ -3,10 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import '../App.css';
 import Header from './Header/Header';
 import Results from './Results/Results';
-import DetailComponent from './DetailComponent';
 import { useErrorHandling } from '../hooks/useErrorHandling';
 import { useFetchResults } from '../hooks/useFetchResults';
 import Pagination from './Pagination';
+import DetailComponent from './DetailComponent';
 
 const resultsPerPage: number = 10;
 
@@ -32,7 +32,7 @@ const SearchComponent = () => {
   };
 
   const handlePageChange = (newPage: number) => {
-    navigate(`/?frontpage=${newPage}`);
+    navigate(`/?frontpage=${newPage}${detailsId ? `&details=${detailsId}` : ''}`);
   };
 
   const handleResultClick = (id: number) => {
@@ -55,36 +55,33 @@ const SearchComponent = () => {
   }
 
   return (
-    <>
-      <div className="content">
-        {loading ? (
-          <div className="loader"></div>
-        ) : (
-          <div className="main-container">
-            <div className="left-section">
-              <div className="header-container">
-                <h1 className="app-header">Star Wars Search</h1>
-                <Header onSearch={handleSearch}/>
-                <button onClick={handleThrowError}>Throw Error</button>
-              </div>
-              <Results results={results} onResultClick={handleResultClick}/>
-              <Pagination
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-                totalResults={totalResults}
-                resultsPerPage={resultsPerPage}
-              />
+    <div className="content">
+      {loading ? (
+        <div className="loader"></div>
+      ) : (
+        <div className="main-container">
+          <div className="left-section">
+            <div className="header-container">
+              <h1 className="app-header">Star Wars Search</h1>
+              <Header onSearch={handleSearch} />
+              <button onClick={handleThrowError}>Throw Error</button>
             </div>
-            {detailsId && (
-              <div className="right-section">
-                <button onClick={handleCloseDetails}>Close</button>
-                <DetailComponent id={detailsId}/>
-              </div>
-            )}
+            <Results results={results} onResultClick={handleResultClick} />
+            <Pagination
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+              totalResults={totalResults}
+              resultsPerPage={resultsPerPage}
+            />
           </div>
-        )}
-      </div>
-    </>
+          {detailsId && (
+            <div className="right-section">
+              <DetailComponent id={detailsId} onClose={handleCloseDetails} />
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -3,9 +3,10 @@ import { Detail } from '../interfaces';
 
 interface DetailComponentProps {
   id: string;
+  onClose: () => void;
 }
 
-const DetailComponent = ({ id }: DetailComponentProps) => {
+const DetailComponent = ({ id, onClose }: DetailComponentProps) => {
   const [detail, setDetail] = useState<Detail | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,6 +36,7 @@ const DetailComponent = ({ id }: DetailComponentProps) => {
 
   return (
     <div className="detail">
+      <button onClick={onClose}>Close</button>
       <h2>{detail.name}</h2>
       <p>Height: {detail.height}</p>
       <p>Mass: {detail.mass}</p>
