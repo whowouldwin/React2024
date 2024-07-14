@@ -23,7 +23,11 @@ const DetailComponent = () => {
     const fetchDetail = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`https://swapi.dev/api/people/${id}/`);
+        const peopleId: string = (currentPage - 1) + (id ?? '');
+        const response = await fetch(`https://swapi.dev/api/people/${peopleId}/`);
+         if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data: Detail = await response.json();
         setDetail(data);
       } catch (error) {
