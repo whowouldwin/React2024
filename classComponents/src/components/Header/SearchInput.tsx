@@ -1,44 +1,27 @@
-import { Component, ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
+import useSearchQuery from "../../hooks/useSearchQuery";
 
 interface SearchInputProps {
   onSearch: (query: string) => void;
 }
 
-interface SearchInputState {
-  query: string;
-}
+const SearchInput = ({ onSearch }: SearchInputProps) => {
+  const { query, setQuery } = useSearchQuery();
 
-class SearchInput extends Component<SearchInputProps, SearchInputState> {
-  constructor(props: SearchInputProps) {
-    super(props);
-    const savedQuery = localStorage.getItem('searchQuery') || '';
-    this.state = {
-      query: savedQuery,
-    };
-  }
-
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ query: e.target.value });
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
   };
 
-  handleSearch = () => {
-    const { query } = this.state;
-    localStorage.setItem('searchQuery', query);
-    this.props.onSearch(query);
+  const handleSearch = () => {
+    onSearch(query);
   };
 
-  render() {
-    return (
-      <div>
-        <input
-          type="text"
-          value={this.state.query}
-          onChange={this.handleInputChange}
-        />
-        <button onClick={this.handleSearch}>Search</button>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <input type="text" value={query} onChange={handleInputChange} />
+      <button onClick={handleSearch}>Search</button>
+    </div>
+  );
+};
 
 export default SearchInput;

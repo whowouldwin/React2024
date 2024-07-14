@@ -1,0 +1,22 @@
+.result-item {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.result-item:hover, .result-item.show {
+  background-color: #e0e0e0;
+}
+
+.result-item.show {
+  background-color: #dddbdb;
+  color: white;
+}
+
+.result-item h2 {
+  color: #1a1a1a;
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.2;
+}

@@ -1,39 +1,27 @@
-import { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Result } from '../../interfaces';
+import './ResultItem.css';
 
 interface ResultItemProps {
   result: Result;
-}
-interface ResultItemState {
-  show: boolean;
+  onClick: () => void;
 }
 
-class ResultItem extends Component<ResultItemProps, ResultItemState> {
-  constructor(props: ResultItemProps) {
-    super(props);
-    this.state = {
-      show: false,
-    };
-  }
+const ResultItem = ({ result, onClick }: ResultItemProps) => {
+  const [show, setShow] = React.useState(false);
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({ show: true });
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(true);
     }, 100);
-  }
+    return () => clearTimeout(timer);
+  }, []);
 
-  render() {
-    const { result } = this.props;
-    const { show } = this.state;
-
-    return (
-      <div className={`result-item ${show ? 'show' : ''}`}>
-        <h2>{result.name}</h2>
-        <p>Height: {result.height}</p>
-        <p>{result.description}</p>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={`result-item ${show ? 'show' : ''}`} onClick={onClick}>
+      <h2>{result.name}</h2>
+    </div>
+  );
+};
 
 export default ResultItem;
