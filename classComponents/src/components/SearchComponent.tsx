@@ -76,7 +76,7 @@ const SearchComponent = () => {
           </div>
           {detailsId && (
             <div className="right-section">
-              <DetailComponent id={detailsId} onClose={handleCloseDetails} />
+              <DetailComponent id={detailsId} onClose={handleCloseDetails} /> //change
             </div>
           )}
         </div>
