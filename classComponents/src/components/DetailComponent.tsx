@@ -1,14 +1,23 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Detail } from '../interfaces';
+import { useNavigate} from 'react-router-dom';
 
-interface DetailComponentProps {
-  id: string;
-  onClose: () => void;
-}
-
-const DetailComponent = ({ id, onClose }: DetailComponentProps) => {
+const DetailComponent = () => {
+  const { id } = useParams<{ id: string }>();
   const [detail, setDetail] = useState<Detail | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(location.search);
+  const page = queryParams.get('frontpage');
+
+  const currentPage = page ? parseInt(page, 10) : 1;
+
+  const handleCloseDetails = () => {
+    navigate(`/?frontpage=${currentPage}`);
+  };
+
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -36,7 +45,7 @@ const DetailComponent = ({ id, onClose }: DetailComponentProps) => {
 
   return (
     <div className="detail">
-      <button onClick={onClose}>Close</button>
+      <button onClick={handleCloseDetails}>Close</button>
       <h2>{detail.name}</h2>
       <p>Height: {detail.height}</p>
       <p>Mass: {detail.mass}</p>

@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import '../App.css';
 import Header from './Header/Header';
 import Results from './Results/Results';
 import { useErrorHandling } from '../hooks/useErrorHandling';
 import { useFetchResults } from '../hooks/useFetchResults';
 import Pagination from './Pagination';
-import DetailComponent from './DetailComponent';
 
 const resultsPerPage: number = 10;
 
@@ -36,18 +35,12 @@ const SearchComponent = () => {
   };
 
   const handleResultClick = (id: number) => {
-    navigate(`/?frontpage=${currentPage}&details=${id}`);
-  };
-
-  const handleCloseDetails = () => {
-    navigate(`/?frontpage=${currentPage}`);
+    navigate(`/details/${id}?frontpage=${currentPage}`);
   };
 
   useEffect(() => {
     const savedQuery = localStorage.getItem('searchQuery') || '';
-    fetchResults(savedQuery, currentPage).then((r) => {
-      console.log(r);
-    });
+    fetchResults(savedQuery, currentPage);
   }, [fetchResults, currentPage]);
 
   if (error) {
@@ -74,11 +67,7 @@ const SearchComponent = () => {
               resultsPerPage={resultsPerPage}
             />
           </div>
-          {detailsId && (
-            <div className="right-section">
-              <DetailComponent id={detailsId} onClose={handleCloseDetails} /> //change
-            </div>
-          )}
+          <Outlet/>
         </div>
       )}
     </div>

@@ -124,7 +124,7 @@ button {
 button:hover {
   background-color: #bbc1c1;
 }
-.right-section button {
+.detail button {
   margin: 10px;
   padding: 10px 20px;
   border: none;
@@ -136,7 +136,7 @@ button:hover {
   transition: background-color 0.3s ease;
   align-self: center;
 }
-.right-section button:hover {
+.detail button:hover {
   background-color: #a0a5a5;
 }
 
@@ -166,4 +166,11 @@ button:hover {
 
 .pagination button:hover:enabled {
   background-color: #62625f;
+}
+.detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-left: 1px solid #ccc;
 }
