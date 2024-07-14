@@ -11,13 +11,13 @@ module.exports = {
   globals: {
     'ts-jest': {
       tsconfig: 'tsconfig.app.json',
-    }
+    },
   },
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
-    '!src/**/*.d.ts'
+    '!src/**/*.d.ts',
   ],
 };

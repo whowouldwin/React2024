@@ -16,7 +16,12 @@ export const useFetchResults = () => {
       const fetchedResults = data.results.map((item: Person) => ({
         name: item.name,
         height: item.height,
-        description: 'Person',
+        mass: item.mass,
+        hair_color: item.hair_color,
+        skin_color: item.skin_color,
+        eye_color: item.eye_color,
+        birth_year: item.birth_year,
+        gender: item.gender,
       }));
       console.log(fetchedResults);
       setResults(fetchedResults);

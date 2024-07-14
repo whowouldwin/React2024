@@ -24,7 +24,7 @@ const SearchComponent = () => {
   const handleSearch = async (query: string) => {
     try {
       await fetchResults(query, 1);
-      navigate(`/?frontpage=1&query=${query}`);
+      navigate(`/?frontpage=1`);
     } catch (err) {
       console.error('Error during search:', err);
     }

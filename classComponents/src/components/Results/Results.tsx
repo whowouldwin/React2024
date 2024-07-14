@@ -9,11 +9,17 @@ interface ResultsProps {
 
 const Results = ({ results, onResultClick }: ResultsProps) => {
   return (
-    <ul className="results-list">
-      {results.map((result, index) => (
-        <ResultItem key={result.name} result={result} onClick={() => onResultClick(index + 1)} />
-      ))}
-    </ul>
+    <div>
+      {results.length === 0 ? (
+        <p>No results found</p>
+      ) : (
+        <ul className="results-list">
+          {results.map((result, index) => (
+            <ResultItem key={result.name} result={result} onClick={() => onResultClick(index + 1)} />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 export default Results;
