@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-import '../App.css';
-import Header from './Header/Header';
-import Results from './Results/Results';
-import { useErrorHandling } from '../hooks/useErrorHandling';
-import { useFetchResults } from '../hooks/useFetchResults';
-import Pagination from './Pagination';
+import '../../App.css';
+import Header from '../Header/Header';
+import Results from '../Results/Results';
+import { useErrorHandling } from '../../hooks/useErrorHandling';
+import { useFetchResults } from '../../hooks/useFetchResults';
+import Pagination from '../Pagination/Pagination';
 
 const resultsPerPage: number = 10;
 

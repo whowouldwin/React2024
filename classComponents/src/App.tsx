@@ -1,9 +1,9 @@
 import './App.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import ErrorBoundary from './components/ErrorBoundary';
-import SearchComponent from './components/SearchComponent';
-import NotFound from './components/NotFound';
-import DetailComponent from './components/DetailComponent';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import SearchComponent from './components/SearchComponent/SearchComponent';
+import NotFound from './components/NotFound/NotFound';
+import DetailComponent from './components/Detail/DetailComponent';
 
 const App = () => {
   return (

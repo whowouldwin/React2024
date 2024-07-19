@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Detail } from '../interfaces';
+import { Detail } from '../../interfaces';
 import { useNavigate} from 'react-router-dom';
 
 const DetailComponent = () => {
