@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import useSearchQuery from "../../hooks/useSearchQuery";
+import useSearchQuery from '../../hooks/useSearchQuery';
 
 interface SearchInputProps {
   onSearch: (query: string) => void;

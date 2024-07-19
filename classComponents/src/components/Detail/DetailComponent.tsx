@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Detail } from '../../interfaces';
-import { useNavigate} from 'react-router-dom';
 
 const DetailComponent = () => {
   const { id } = useParams<{ id: string }>();
@@ -9,43 +8,30 @@ const DetailComponent = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const queryParams = new URLSearchParams(location.search);
-  const page = queryParams.get('frontpage');
-
-  const currentPage = page ? parseInt(page, 10) : 1;
-
-  const handleCloseDetails = () => {
-    navigate(`/?frontpage=${currentPage}`);
-  };
-
-
   useEffect(() => {
     const fetchDetail = async () => {
       setLoading(true);
       try {
-        const peopleId: string = (currentPage - 1) + (id ?? '');
-        const response = await fetch(`https://swapi.dev/api/people/${peopleId}/`);
-         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const response = await fetch(`https://swapi.dev/api/people/${id}/`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data: Detail = await response.json();
         setDetail(data);
       } catch (error) {
         console.error('Error fetching detail:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchDetail();
   }, [id]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const handleCloseDetails = () => {
+    navigate('/');
+  };
 
-  if (!detail) {
-    return <div>No detail available</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (!detail) return <div>No detail available</div>;
 
   return (
     <div className="detail">
