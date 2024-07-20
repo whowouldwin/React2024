@@ -1,36 +1,18 @@
-import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Detail } from '../../interfaces';
+import { useGetPersonDetailsQuery } from '../../store/apiSlice';
+import { getErrorMessage } from '../../utils/errorUtils';
 
 const DetailComponent = () => {
   const { id } = useParams<{ id: string }>();
-  const [detail, setDetail] = useState<Detail | null>(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchDetail = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`https://swapi.dev/api/people/${id}/`);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const data: Detail = await response.json();
-        setDetail(data);
-      } catch (error) {
-        console.error('Error fetching detail:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDetail();
-  }, [id]);
+  const { data: detail, error, isLoading } = useGetPersonDetailsQuery(id!);
 
   const handleCloseDetails = () => {
     navigate('/');
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {getErrorMessage(error)}</div>;
   if (!detail) return <div>No detail available</div>;
 
   return (

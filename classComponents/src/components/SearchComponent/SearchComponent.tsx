@@ -1,50 +1,41 @@
-import { useEffect } from 'react';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
+import { useSearchPeopleQuery } from '../../store/apiSlice';
 import '../../App.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../store/store';
-import { fetchResultsExtra, setPage, setQuery } from '../../store/searchSlice';
 import Header from '../Header/Header';
 import Results from '../Results/Results';
 import Pagination from '../Pagination/Pagination';
+import { getErrorMessage } from '../../utils/errorUtils';
 
 const resultsPerPage: number = 10;
 
 const SearchComponent = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { results, loading, totalResults, currentPage, query } = useSelector((state: RootState) => state.search);
   const navigate = useNavigate();
   const location = useLocation();
-
   const queryParams = new URLSearchParams(location.search);
   const page = queryParams.get('frontpage') || '1';
   const detailsId = queryParams.get('details');
+  const query = queryParams.get('query') || '';
 
-  useEffect(() => {
-    dispatch(setPage(parseInt(page, 10)));
-    dispatch(fetchResultsExtra({ query, page: parseInt(page, 10) }));
-  }, [dispatch, page, query]);
+  const { data, error, isLoading } = useSearchPeopleQuery({ query, page: parseInt(page, 10) });
 
-  const handleSearch = async (searchQuery: string) => {
-    dispatch(setQuery(searchQuery));
-    dispatch(fetchResultsExtra({ query: searchQuery, page: 1 }));
-    navigate('/?frontpage=1');
+  const handleSearch = (searchQuery: string) => {
+    navigate(`/?query=${searchQuery}&frontpage=1`);
   };
 
   const handlePageChange = (newPage: number) => {
-    dispatch(setPage(newPage));
-    dispatch(fetchResultsExtra({ query, page: newPage }));
-    navigate(`/?frontpage=${newPage}${detailsId ? `&details=${detailsId}` : ''}`);
+    navigate(`/?query=${query}&frontpage=${newPage}${detailsId ? `&details=${detailsId}` : ''}`);
   };
 
   const handleResultClick = (id: number) => {
-    navigate(`/details/${id}?frontpage=${currentPage}`);
+    navigate(`/details/${id}?query=${query}&frontpage=${page}`);
   };
 
   return (
     <div className="content">
-      {loading ? (
+      {isLoading ? (
         <div className="loader"></div>
+      ) : error ? (
+        <div>Error: {getErrorMessage(error)}</div>
       ) : (
         <div className="main-container">
           <div className="left-section">
@@ -52,11 +43,11 @@ const SearchComponent = () => {
               <h1 className="app-header">Star Wars Search</h1>
               <Header onSearch={handleSearch} />
             </div>
-            <Results results={results} onResultClick={handleResultClick} />
+            <Results results={data?.results || []} onResultClick={handleResultClick} />
             <Pagination
-              currentPage={currentPage}
+              currentPage={parseInt(page, 10)}
               onPageChange={handlePageChange}
-              totalResults={totalResults}
+              totalResults={data?.count || 0}
               resultsPerPage={resultsPerPage}
             />
           </div>
