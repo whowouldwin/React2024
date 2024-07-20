@@ -4,9 +4,9 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import SearchComponent from './components/SearchComponent/SearchComponent';
 import NotFound from './components/NotFound/NotFound';
 import DetailComponent from './components/Detail/DetailComponent';
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeProvider';
 import Flyout from './components/Flyout/Flyout';
-import ThemeToggle from './ThemeToggle/ThemeToggle';
+import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 
 const App = () => {
   return (
