@@ -25,8 +25,9 @@
 .result-item-content {
   flex-grow: 1;
 }
+
 .result-item-content h2 {
-  color: #1a1a1a;
+  color: var(--text-color-main);
   font-size: 16px;
   margin: 0;
   line-height: 1.2;
