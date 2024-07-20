@@ -1,51 +1,45 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import '../../App.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../store/store';
+import { fetchResultsExtra, setPage, setQuery } from '../../store/searchSlice';
 import Header from '../Header/Header';
 import Results from '../Results/Results';
-import { useErrorHandling } from '../../hooks/useErrorHandling';
-import { useFetchResults } from '../../hooks/useFetchResults';
 import Pagination from '../Pagination/Pagination';
 
 const resultsPerPage: number = 10;
 
 const SearchComponent = () => {
-  const { results, loading, fetchResults, totalResults } = useFetchResults();
-  const { error, handleThrowError } = useErrorHandling();
+  const dispatch: AppDispatch = useDispatch();
+  const { results, loading, totalResults, currentPage, query } = useSelector((state: RootState) => state.search);
   const navigate = useNavigate();
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
-  const page = queryParams.get('frontpage');
+  const page = queryParams.get('frontpage') || '1';
   const detailsId = queryParams.get('details');
 
-  const currentPage = page ? parseInt(page, 10) : 1;
+  useEffect(() => {
+    dispatch(setPage(parseInt(page, 10)));
+    dispatch(fetchResultsExtra({ query, page: parseInt(page, 10) }));
+  }, [dispatch, page, query]);
 
-  const handleSearch = async (query: string) => {
-    try {
-      await fetchResults(query, 1);
-      navigate('/?frontpage=1');
-    } catch (err) {
-      console.error('Error during search:', err);
-    }
+  const handleSearch = async (searchQuery: string) => {
+    dispatch(setQuery(searchQuery));
+    dispatch(fetchResultsExtra({ query: searchQuery, page: 1 }));
+    navigate('/?frontpage=1');
   };
 
   const handlePageChange = (newPage: number) => {
+    dispatch(setPage(newPage));
+    dispatch(fetchResultsExtra({ query, page: newPage }));
     navigate(`/?frontpage=${newPage}${detailsId ? `&details=${detailsId}` : ''}`);
   };
 
   const handleResultClick = (id: number) => {
     navigate(`/details/${id}?frontpage=${currentPage}`);
   };
-
-  useEffect(() => {
-    const savedQuery = localStorage.getItem('searchQuery') || '';
-    fetchResults(savedQuery, currentPage);
-  }, [fetchResults, currentPage]);
-
-  if (error) {
-    throw error;
-  }
 
   return (
     <div className="content">
@@ -57,7 +51,6 @@ const SearchComponent = () => {
             <div className="header-container">
               <h1 className="app-header">Star Wars Search</h1>
               <Header onSearch={handleSearch} />
-              <button onClick={handleThrowError}>Throw Error</button>
             </div>
             <Results results={results} onResultClick={handleResultClick} />
             <Pagination
