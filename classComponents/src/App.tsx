@@ -4,6 +4,7 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import SearchComponent from './components/SearchComponent/SearchComponent';
 import NotFound from './components/NotFound/NotFound';
 import DetailComponent from './components/Detail/DetailComponent';
+import Flyout from './components/Flyout/Flyout';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <Flyout />
         </ErrorBoundary>
       </div>
     </BrowserRouter>
