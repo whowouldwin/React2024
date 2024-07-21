@@ -1,21 +1,33 @@
 .result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
   width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  border-radius: 4px;
 }
 
-.result-item:hover, .result-item.show {
-  background-color: #e0e0e0;
+.result-item:hover {
+  background-color: rgba(206, 207, 207, 0.98);
 }
 
-.result-item.show {
-  background-color: #dddbdb;
-  color: white;
+.result-checkbox {
+  margin-left: 1em;
+  transform: scale(1.5);
+  cursor: pointer;
 }
 
-.result-item h2 {
-  color: #1a1a1a;
+.result-item-content {
+  flex-grow: 1;
+}
+
+.result-item-content h2 {
+  color: var(--text-color-main);
   font-size: 16px;
   margin: 0;
   line-height: 1.2;

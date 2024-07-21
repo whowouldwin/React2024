@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Pagination from '../components/Pagination';
+import Pagination from '../components/Pagination/Pagination';
 
 test('updates URL query parameter when page changes', () => {
   const handlePageChange = jest.fn();
